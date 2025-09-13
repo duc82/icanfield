@@ -8,14 +8,13 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import Link from "next/link";
 import ArrowRight from "@/components/svg/ArrowRight";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import useIsMobile from "@/hooks/useIsMobile";
 
 const featuredNews = [
   {
-    id: 1,
     title:
       "Khám phá các quốc gia có chính sách định cư tay nghề tốt nhất, cơ hội phát triển sự nghiệp.",
     type: "Sự kiện nổi bật",
@@ -24,7 +23,6 @@ const featuredNews = [
     href: "#",
   },
   {
-    id: 2,
     title:
       "Khám phá các quốc gia có chính sách định cư tay nghề tốt nhất, cơ hội phát triển sự nghiệp.",
     type: "Sự kiện nổi bật",
@@ -33,7 +31,6 @@ const featuredNews = [
     href: "#",
   },
   {
-    id: 3,
     title: "Cập nhật chính sách du học Úc dành cho sinh viên quốc tế năm 2024",
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
@@ -44,25 +41,35 @@ const featuredNews = [
 
 export default function FeaturedNews() {
   const isMobile = useIsMobile();
-  const [newActiveId, setNewActiveId] = useState(1);
+  const [newsActive, setNewsActive] = useState(0);
+  const [itemHeight, setItemHeight] = useState(0);
   const progressBarRef = useRef(null);
 
-  const featuredNew = featuredNews.find((item) => item.id === newActiveId);
+  const itemRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (itemRef.current) {
+      const height = itemRef.current.offsetHeight;
+      setItemHeight(height);
+    }
+  }, []);
+
+  const featuredNew = featuredNews[newsActive];
 
   return (
     <section className="px-20 pt-20 pb-[6.75rem] max-sm:pt-12 max-sm:pb-6 max-sm:px-4">
       <Title text="Tin tức nổi bật" className="mb-6" />
       {!isMobile && (
         <div className="max-sm:hidden rounded-[1.25rem] w-full h-[34.63219rem] relative overflow-hidden">
-          {featuredNews.map((item) => (
+          {featuredNews.map((item, index) => (
             <Image
-              key={item.id}
+              key={index}
               src={item.image}
               fill
               alt={featuredNew?.title || "Featured News"}
               className={cn(
                 "object-center opacity-0 transition duration-500",
-                newActiveId === item.id && "opacity-100"
+                newsActive === index && "opacity-100"
               )}
             />
           ))}
@@ -97,20 +104,28 @@ export default function FeaturedNews() {
             </Link>
           </div>
 
-          <div className="absolute top-[5.63rem] right-[1.48rem] max-sm:hidden flex items-center z-20">
-            <div className="flex flex-col space-y-12 max-w-[18.3377rem]">
-              {featuredNews.map((featuredNew) => (
+          <div className="absolute top-[5.63rem] bottom-[5.63rem] right-[1.48rem] max-sm:hidden flex items-center overflow-hidden z-20">
+            <div
+              style={{
+                transform: `translateY(calc(50% - ${
+                  newsActive * (itemHeight + 48) + itemHeight / 2
+                }px))`,
+              }}
+              className="flex flex-col space-y-12 max-w-[18.3377rem] transition duration-300"
+            >
+              {featuredNews.map((featuredNew, index) => (
                 <button
                   type="button"
-                  key={featuredNew.id}
-                  onClick={() => setNewActiveId(featuredNew.id)}
+                  key={index}
+                  onClick={() => setNewsActive(index)}
+                  ref={index === 0 ? itemRef : null}
                   className={cn(
                     "text-white/[34%] text-left transition duration-300",
-                    newActiveId === featuredNew.id && "text-white"
+                    newsActive === index && "text-white"
                   )}
                 >
                   <p className="text-[0.78456rem] font-semibold leading-[1.01994rem] tracking-[0.05606rem] uppercase">
-                    {featuredNew.id.toString().padStart(2, "0")}
+                    {(index + 1).toString().padStart(2, "0")}
                   </p>
                   <h3 className="text-[0.96869rem] font-medium leading-[1.28469rem]">
                     {featuredNew.title}
@@ -122,28 +137,28 @@ export default function FeaturedNews() {
               <button
                 type="button"
                 onClick={() =>
-                  setNewActiveId((prev) => (prev === 1 ? prev : prev - 1))
+                  setNewsActive((prev) => (prev === 0 ? prev : prev - 1))
                 }
                 className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
               >
                 <ChevronUp />
               </button>
               <div className="flex flex-col items-center space-y-1.5">
-                {featuredNews.map((item) => (
+                {featuredNews.map((item, index) => (
                   <button
-                    key={item.id}
+                    key={index}
                     type="button"
-                    onClick={() => setNewActiveId(item.id)}
+                    onClick={() => setNewsActive(index)}
                     className={cn(
                       "size-3 flex items-center justify-center rounded-full transition duration-300",
 
-                      newActiveId === item.id && "border border-white"
+                      newsActive === index && "border border-white"
                     )}
                   >
                     <div
                       className={cn(
                         "size-2 rounded-full border border-white/40 transition duration-300",
-                        newActiveId === item.id && "bg-white border-none"
+                        newsActive === index && "bg-white border-none"
                       )}
                     ></div>
                   </button>
@@ -152,8 +167,8 @@ export default function FeaturedNews() {
               <button
                 type="button"
                 onClick={() =>
-                  setNewActiveId((prev) =>
-                    prev === featuredNews.length ? prev : prev + 1
+                  setNewsActive((prev) =>
+                    prev === featuredNews.length - 1 ? prev : prev + 1
                   )
                 }
                 className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
@@ -188,8 +203,8 @@ export default function FeaturedNews() {
             },
           }}
         >
-          {featuredNews.map((featuredNew) => (
-            <SwiperSlide key={featuredNew.id}>
+          {featuredNews.map((featuredNew, index) => (
+            <SwiperSlide key={index}>
               <div
                 className="rounded-[1.25rem] relative overflow-hidden"
                 style={{

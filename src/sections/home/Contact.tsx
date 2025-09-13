@@ -38,7 +38,7 @@ export default function Contact() {
         width={0}
         height={0}
         sizes="100vw"
-        className="absolute -top-[5rem] left-6 w-[64.45769rem] h-[71.75rem] object-cover z-20 max-sm:hidden"
+        className="absolute fade-in-box -top-[5rem] left-6 w-[64.45769rem] h-[71.75rem] object-cover z-20 max-sm:hidden"
       />
       <Image
         src="/home/contact-building.png"

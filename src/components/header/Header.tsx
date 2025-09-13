@@ -392,11 +392,11 @@ export default function Header() {
                     <ul className="grid gap-2">
                       {languages.map((lang, i) => (
                         <li key={i}>
-                          <NavigationMenuLink asChild>
+                          <NavigationMenuLink asChild className="p-0">
                             <button
                               type="button"
                               onClick={() => setActiveLang(lang)}
-                              className="p-0 text-xs w-full font-medium leading-[1.125rem] flex items-center justify-center"
+                              className="text-xs w-full font-medium leading-[1.125rem] flex items-center justify-center"
                             >
                               <div className="flex items-center space-x-2">
                                 <Image

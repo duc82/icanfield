@@ -64,7 +64,6 @@ export default function Contact() {
         sizes="100vw"
         className="absolute top-[28.06rem] left-[36.88rem] w-[12.56263rem] h-[10.36419rem] object-cover z-40 max-sm:hidden"
       />
-
       <Image
         src="/home/contact-mobile.png"
         alt=""

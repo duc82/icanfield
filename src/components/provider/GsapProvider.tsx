@@ -46,7 +46,6 @@ export default function GsapProvider({
         y: 50,
         scrollTrigger: {
           trigger: el,
-          markers: true,
         },
         delay: 0.2,
         duration: 1,

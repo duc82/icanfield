@@ -11,10 +11,10 @@ export default function Hero() {
               slug: "/blogs",
             },
           ]}
-          className="max-sm:hidden"
+          className="max-sm:hidden fade-in-box"
         />
         <div className="mt-6">
-          <div className="w-[58.96875rem]">
+          <div className="w-[58.96875rem] fade-in-box">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="947"
@@ -46,15 +46,15 @@ export default function Hero() {
 
           <div className="flex items-center max-sm:flex-col gap-20 max-sm:gap-8">
             <div className="w-full">
-              <h1 className="mt-4 max-sm:m-0 font-svn-mightiest text-white font-medium uppercase text-[5rem] max-sm:text-[2.375rem] max-sm:leading-[2.85rem] leading-[6rem] tracking-[-0.1rem] max-sm:tracking-[-0.0475rem]">
+              <h1 className="fade-in-box mt-4 max-sm:m-0 font-svn-mightiest text-white font-medium uppercase text-[5rem] max-sm:text-[2.375rem] max-sm:leading-[2.85rem] leading-[6rem] tracking-[-0.1rem] max-sm:tracking-[-0.0475rem]">
                 Sự Kiện icanfield
               </h1>
-              <h2 className="font-svn-mightiest text-white text-[3.25rem] max-sm:text-[1.75rem] max-sm:font-medium max-sm:leading-[2.275rem] max-sm:tracking-[-0.035rem] font-medium leading-[3.9rem] tracking-[0.065rem]">
+              <h2 className="fade-in-box font-svn-mightiest text-white text-[3.25rem] max-sm:text-[1.75rem] max-sm:font-medium max-sm:leading-[2.275rem] max-sm:tracking-[-0.035rem] font-medium leading-[3.9rem] tracking-[0.065rem]">
                 Dòng Chảy Tin Tức
               </h2>
             </div>
             <div className="w-full">
-              <p className="uppercase text-base max-sm:text-xs max-sm:leading-[1.125rem] font-semibold text-white/85 max-w-[20.1875rem] max-sm:max-w-full">
+              <p className="fade-in-box uppercase text-base max-sm:text-xs max-sm:leading-[1.125rem] font-semibold text-white/85 max-w-[20.1875rem] max-sm:max-w-full">
                 Khám phá những chia sẻ giá trị, kinh nghiệm thực tiễn và thông
                 tin hữu ích với iCanfield.
               </p>

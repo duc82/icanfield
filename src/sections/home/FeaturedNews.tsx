@@ -58,7 +58,7 @@ export default function FeaturedNews() {
 
   return (
     <section className="px-20 pt-20 pb-[6.75rem] max-sm:pt-12 max-sm:pb-6 max-sm:px-4">
-      <Title text="Tin tức nổi bật" className="mb-6" />
+      <Title text="Tin tức nổi bật" className="fade-in-box mb-6" />
       {!isMobile && (
         <div className="max-sm:hidden rounded-[1.25rem] w-full h-[34.63219rem] relative overflow-hidden">
           {featuredNews.map((item, index) => (
@@ -76,10 +76,10 @@ export default function FeaturedNews() {
           <div className="bg-linear-[183deg] from-[rgba(63,34,20,0.00)] from-[10.25%] to-black to-[119.74%] absolute top-0 w-full h-full"></div>
           <div className="absolute bottom-6 left-[4.54rem] flex flex-col space-y-[1.34rem] z-20">
             <div className="flex items-center space-x-[1.34rem]">
-              <span className="bg-white text-brown rounded-[0.33625rem] px-[0.6725rem] flex items-center text-[0.78456rem] font-medium leading-[1.37181rem] tracking-[-0.02019rem]">
+              <span className="fade-in-box bg-white text-brown rounded-[0.33625rem] px-[0.6725rem] flex items-center text-[0.78456rem] font-medium leading-[1.37181rem] tracking-[-0.02019rem]">
                 {featuredNew?.type}
               </span>
-              <div className="flex items-center space-x-1 text-[0.78456rem] leading-[0.89663rem] text-white">
+              <div className="fade-in-box flex items-center space-x-1 text-[0.78456rem] leading-[0.89663rem] text-white">
                 <Image
                   src="/home/calendar.svg"
                   alt="Calendar"
@@ -91,13 +91,13 @@ export default function FeaturedNews() {
               </div>
             </div>
             <div className="max-w-[40.9375rem]">
-              <h3 className="text-white font-svn-mightiest text-[2.24156rem] font-medium leading-[2.68988rem] tracking-[-0.05606rem]">
+              <h3 className="fade-in-box text-white font-svn-mightiest text-[2.24156rem] font-medium leading-[2.68988rem] tracking-[-0.05606rem]">
                 {featuredNew?.title}
               </h3>
             </div>
             <Link
               href={featuredNew?.href || "#"}
-              className="px-6 py-2 w-fit text-white text-sm font-medium leading-[1.3125rem] tracking-[-0.0175rem] rounded-lg border border-white/25 h-12 space-x-2 flex items-center"
+              className="fade-in-box px-6 py-2 w-fit text-white text-sm font-medium leading-[1.3125rem] tracking-[-0.0175rem] rounded-lg border border-white/25 h-12 space-x-2 flex items-center"
             >
               <span>Chi tiết bài viết</span>
               <ArrowRight />

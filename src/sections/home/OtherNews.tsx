@@ -121,7 +121,7 @@ export default function OtherNews() {
 
   return (
     <section className="px-20 pb-[2.19rem] max-sm:pb-12 max-sm:px-4">
-      <Title text="Tin tức khác" className="mb-7 max-sm:mb-4" />
+      <Title text="Tin tức khác" className="fade-in-box mb-7 max-sm:mb-4" />
       <div className="flex items-center justify-between max-sm:items-start max-sm:flex-col mb-8">
         <div className="overflow-hidden w-full max-sm:mb-3">
           <div
@@ -173,20 +173,19 @@ export default function OtherNews() {
 
       <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-x-[1.87rem] gap-y-[4.5rem] max-sm:gap-y-6">
         {news.map((item, i) => (
-          <div
-            className="rounded-[1.25rem] overflow-hidden relative group"
+          <Link
+            href={item.href}
+            className="fade-in-box-item rounded-[1.25rem] overflow-hidden relative group"
             key={i}
           >
-            <Link href={item.href} className="block">
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="w-full h-auto object-cover transition duration-500 group-hover:scale-110"
-              />
-            </Link>
+            <Image
+              src={item.image}
+              alt={item.title}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-auto object-cover transition duration-500 group-hover:scale-110"
+            />
 
             <div className="absolute top-0 left-0 w-full h-full bg-linear-other-news cursor-pointer z-10"></div>
 
@@ -194,12 +193,9 @@ export default function OtherNews() {
               <span className="py-1.5 px-3 max-sm:py-[0.31rem] max-sm:px-2.5 rounded-md bg-[rgba(248,244,241,0.48)] backdrop-blur-[15px] inline-flex items-center text-xs max-sm:text-[0.625rem] font-bold uppercase leading-[1.125rem] max-sm:leading-[0.9375rem] mb-[0.68rem] max-sm:mb-3">
                 Tin tức du học
               </span>
-              <Link
-                href={item.href}
-                className="max-w-[23.24119rem] max-sm:max-w-full block font-svn-mightiest text-xl max-sm:text-sm font-medium leading-[1.875rem] max-sm:leading-[1.3125rem] tracking-[-0.025rem] mb-2"
-              >
+              <p className="max-w-[23.24119rem] max-sm:max-w-full block font-svn-mightiest text-xl max-sm:text-sm font-medium leading-[1.875rem] max-sm:leading-[1.3125rem] tracking-[-0.025rem] mb-2">
                 {item.title}
-              </Link>
+              </p>
               <div className="flex items-center space-x-1 text-sm max-sm:text-xs leading-[0.89663rem] max-sm:leading-[1.125rem] text-[#C0C0C0]">
                 <Image
                   src="/home/calendar.svg"
@@ -213,20 +209,25 @@ export default function OtherNews() {
             </div>
 
             <div className="absolute top-8 right-8 z-30 max-sm:hidden">
-              <Link
-                href={item.href}
-                className="flex items-center relative overflow-hidden"
-              >
-                <div className="size-11 flex items-center rounded-[0.9375rem] justify-center bg-white">
-                  <ArrowTopRight />
+              <div className="flex items-center justify-end relative overflow-hidden w-[8.5rem] h-11">
+                <span className="absolute top-1/2 left-5 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-500">
+                  Xem thêm
+                </span>
+                <div className="w-11 h-full flex items-center justify-end rounded-[0.9375rem] bg-white group-hover:w-full transition-all duration-500">
+                  <div className="size-11 flex items-center justify-center">
+                    <ArrowTopRight />
+                  </div>
                 </div>
-              </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="flex justify-center items-center space-x-6 max-sm:space-x-4 mt-[1.38rem] max-sm:mt-6">
-        <button type="button" className="py-[0.62rem] px-[0.53588rem]">
+        <button
+          type="button"
+          className="py-[0.62rem] px-[0.53588rem] size-10 max-sm:size-8 p-3 max-sm:p-2.5 flex items-center justify-center rounded-xl hover:bg-[#3F2214]/20"
+        >
           <ChevronLeft />
         </button>
         <div className="flex items-center space-x-3.5 max-sm:space-x-[1.19rem]">
@@ -261,7 +262,10 @@ export default function OtherNews() {
             ...
           </button>
         </div>
-        <button type="button">
+        <button
+          type="button"
+          className="size-10 max-sm:size-8 p-3 max-sm:p-2.5 flex items-center justify-center rounded-xl hover:bg-[#3F2214]/20"
+        >
           <ChevronLeft className="rotate-180" />
         </button>
       </div>

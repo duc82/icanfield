@@ -35,6 +35,18 @@ export default function GsapProvider({
         duration: 1,
       })
     );
+
+    gsap.from(".fade-in-box-item", {
+      scrollTrigger: {
+        trigger: ".fade-in-box-item",
+        start: "top 80%",
+      },
+      opacity: 0,
+      y: -25,
+      stagger: 0.1,
+      duration: 0.5,
+      delay: 0.2,
+    });
   }, []);
   return (
     <div id="smooth-wrapper">

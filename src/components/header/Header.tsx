@@ -10,15 +10,23 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 import MobileMenu from "./MobileMenu";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import NavMenu from "./NavMenu";
+import { NavItem } from "@/types/header";
 
 export interface NavItemLeft {
   title: string;
   href: string;
   description: string;
-  subMenus?: { title: string; href: string }[];
+  subMenus?: { title: string; href: string; image: string }[];
   className?: string;
   image?: string;
   mobileImage: string;
@@ -66,8 +74,9 @@ const navItemLeft: NavItemLeft[] = [
       {
         title: "Các chương trình định cư",
         href: "#",
+        image: "/header/submenu-3.png",
       },
-      { title: "Dự án EB-5", href: "#" },
+      { title: "Dự án EB-5", href: "#", image: "/header/submenu-3.png" },
     ],
     image: "/header/submenu-1.png",
     description: "24 chương trình",
@@ -90,39 +99,6 @@ const navItemLeft: NavItemLeft[] = [
   },
 ];
 
-const navItemRight: NavItemRight[] = [
-  {
-    title: "Các chương trình khác",
-    subMenus: [
-      { title: "Đầu tư định cư Úc", href: "#" },
-      { title: "Bất động sản Úc", href: "#" },
-    ],
-    image: "/header/submenu-2.png",
-  },
-  {
-    title: "Cẩm nang iCanfield",
-    href: "#",
-  },
-  {
-    title: "Hỗ trợ khách hàng",
-    icon: "/header/star.svg",
-    className:
-      "text-sm leading-[1.3125rem] tracking-[-0.0175rem] bg-primary text-white rounded-lg py-2 px-4.5 pr-[1.375rem] hover:bg-primary hover:text-white data-[state=open]:bg-primary data-[state=open]:hover:bg-primary data-[state=open]:text-white focus:bg-primary focus:text-white data-[state=open]:focus:bg-primary",
-    subMenus: [
-      { title: "Thẩm định hồ sơ", href: "#" },
-      {
-        title: "So sánh chương trình",
-        href: "#",
-      },
-      {
-        title: "Thông tin hộ chiếu",
-        href: "#",
-      },
-    ],
-    image: "/header/submenu-3.png",
-  },
-];
-
 const languages = [
   {
     title: "VN",
@@ -134,8 +110,85 @@ const languages = [
   },
 ];
 
+const navItems: NavItem[] = [
+  {
+    title: "Định cư Canada",
+    href: "#",
+  },
+  {
+    title: "Định cư Mỹ",
+    href: "#",
+    x: "11rem",
+    subMenus: [
+      {
+        title: "Các chương trình định cư",
+        href: "#",
+        image: "/header/submenu-1.png",
+      },
+      { title: "Dự án EB-5", href: "#", image: "/header/submenu-2.png" },
+    ],
+  },
+  {
+    title: "Quốc tịch Caribe",
+    href: "#",
+  },
+  {
+    title: "Định cư Châu Âu",
+    href: "#",
+  },
+];
+
+const navItemRight: NavItem[] = [
+  {
+    title: "Các chương trình khác",
+    x: "29rem",
+    subMenus: [
+      { title: "Đầu tư định cư Úc", href: "#", image: "/header/submenu-2.png" },
+      { title: "Bất động sản Úc", href: "#", image: "/header/submenu-3.png" },
+    ],
+  },
+  {
+    title: "Cẩm nang iCanfield",
+    href: "#",
+  },
+  {
+    title: "Hỗ trợ khách hàng",
+    icon: "/header/star.svg",
+    className:
+      "text-sm leading-[1.3125rem] tracking-[-0.0175rem] bg-primary text-white rounded-lg py-2 px-4.5 pr-[1.375rem] hover:bg-primary hover:text-white hover:bg-primary text-white focus:bg-primary focus:text-white focus:bg-primary",
+    x: "45rem",
+    subMenus: [
+      { title: "Thẩm định hồ sơ", href: "#", image: "/header/submenu-1.png" },
+      {
+        title: "So sánh chương trình",
+        href: "#",
+        image: "/header/submenu-2.png",
+      },
+      {
+        title: "Thông tin hộ chiếu",
+        href: "#",
+        image: "/header/submenu-3.png",
+      },
+    ],
+  },
+];
+
 export default function Header() {
   const [activeLang, setActiveLang] = useState(languages[0]);
+
+  useGSAP(() => {
+    gsap.from(".fade-in-box-nav-item", {
+      scrollTrigger: {
+        trigger: ".fade-in-box-nav-item",
+        start: "top 80%",
+      },
+      opacity: 0,
+      y: -25,
+      delay: 0.2,
+      duration: 0.5,
+      stagger: 0.1,
+    });
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 shadow-md">
@@ -143,7 +196,7 @@ export default function Header() {
       <>
         <div className="max-sm:hidden bg-linear-[118deg] from-primary from-[69.75%] via-secondary via-[142.7%] to-third to-[182.76%] text-white px-20 flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="p-2 bg-white/[0.08] flex items-center space-x-2.5">
+            <div className="p-[0.47rem_0.59rem] bg-white/[0.08] flex items-center space-x-2.5">
               <Image
                 src="/header/file.svg"
                 width={0}
@@ -151,13 +204,45 @@ export default function Header() {
                 alt=""
                 className="size-3.5 object-cover"
               />
-              <p className="uppercase text-text-primary text-sm font-medium leading-[1.125rem]">
+              <p className="uppercase whitespace-nowrap text-text-primary text-xs font-medium leading-[1.125rem]">
                 Tin doanh nghiệp
               </p>
             </div>
-            <p className="text-[0.8125rem] leading-[0.975rem]">
-              Tối ưu công năng sử dụng trong căn hộ ở Ecopark
-            </p>
+            <Swiper
+              slidesPerView={1}
+              direction="vertical"
+              loop
+              autoplay={{
+                delay: 5000,
+              }}
+              modules={[Autoplay]}
+              className="h-5"
+            >
+              <SwiperSlide className="!flex items-center">
+                <Link
+                  href="#"
+                  className="text-[0.8125rem] leading-[0.975rem] hover:underline"
+                >
+                  Tối ưu công năng sử dụng trong căn hộ ở Ecopark
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide className="!flex items-center">
+                <Link
+                  href="#"
+                  className="text-[0.8125rem] leading-[0.975rem] hover:underline"
+                >
+                  Tối ưu công năng sử dụng trong căn hộ ở Ecopark
+                </Link>
+              </SwiperSlide>
+              <SwiperSlide className="!flex items-center">
+                <Link
+                  href="#"
+                  className="text-[0.8125rem] leading-[0.975rem] hover:underline"
+                >
+                  Tối ưu công năng sử dụng trong căn hộ ở Ecopark
+                </Link>
+              </SwiperSlide>
+            </Swiper>
           </div>
           <div className="flex items-center space-x-11">
             {links.map((link) => (
@@ -173,7 +258,7 @@ export default function Header() {
                   alt={link.title}
                   className="size-4 object-cover"
                 />
-                <span className="uppercase text-xs font-medium leading-[1.125rem] tracking-[-0.0075rem]">
+                <span className="uppercase whitespace-nowrap text-xs font-medium leading-[1.125rem] tracking-[-0.0075rem]">
                   {link.title}
                 </span>
               </Link>
@@ -192,14 +277,14 @@ export default function Header() {
                     <span>{activeLang.title}</span>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="z-10">
-                    <ul className="grid w-20">
+                    <ul className="grid w-20 gap-2">
                       {languages.map((lang, i) => (
                         <li key={i}>
-                          <NavigationMenuLink asChild>
+                          <NavigationMenuLink asChild className="p-0">
                             <button
                               type="button"
                               onClick={() => setActiveLang(lang)}
-                              className="text-xs w-full font-medium leading-[1.125rem] p-0"
+                              className="text-xs w-full font-medium leading-[1.125rem]"
                             >
                               <div className="flex items-center space-x-1.5">
                                 <Image
@@ -222,63 +307,9 @@ export default function Header() {
             </NavigationMenu>
           </div>
         </div>
-        <div className="max-sm:hidden bg-white text-[#333] px-20 py-2.5 flex items-center justify-between">
-          <NavigationMenu viewport={false} className="max-sm:hidden">
-            <NavigationMenuList className="p-1 flex items-center gap-10">
-              {navItemLeft.map((item) => (
-                <NavigationMenuItem key={item.title}>
-                  {!item.subMenus ? (
-                    <NavigationMenuLink
-                      asChild
-                      className="text-base font-medium -tracking-[0.02rem] p-0"
-                    >
-                      <Link href={item.href}>{item.title}</Link>
-                    </NavigationMenuLink>
-                  ) : (
-                    <>
-                      <NavigationMenuTrigger className="text-base font-medium -tracking-[0.02rem] p-0">
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="flex items-center justify-between space-x-6 w-[60rem]">
-                          <div className="p-8 h-full w-full flex-1">
-                            <h3 className="text-[2rem] text-[#333] font-svn-mightiest font-medium leading-[2.4rem] -tracking-[0.04rem] mb-9">
-                              {item.title}
-                            </h3>
-                            <ul className="grid gap-2">
-                              {item.subMenus?.map((itemSub) => (
-                                <li key={itemSub.title}>
-                                  <NavigationMenuLink
-                                    asChild
-                                    className="px-0 uppercase text-xl font-medium leading-[1.5rem] -tracking-[0.0125rem] text-[#5C5C5C]"
-                                  >
-                                    <Link href={itemSub.href}>
-                                      {itemSub.title}
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          {item.image && (
-                            <Image
-                              src={item.image}
-                              alt={item.title}
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              className="w-[26.5rem] h-[20.5rem] rounded-xl object-cover"
-                            />
-                          )}
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  )}
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          <Link href="/">
+        <div className="max-sm:hidden bg-white text-[#333] px-20 flex items-center justify-between">
+          <NavMenu datas={navItems} />
+          <Link href="/" className="fade-in-box-nav-item">
             <Image
               src="/header/logo.png"
               width={38}
@@ -287,75 +318,7 @@ export default function Header() {
               className="w-[2.33106rem] h-[3.125rem]"
             />
           </Link>
-          <NavigationMenu viewport={true} className="max-sm:hidden">
-            <NavigationMenuList className="flex items-center gap-10">
-              {navItemRight.map((item) => (
-                <NavigationMenuItem key={item.title}>
-                  {item.href ? (
-                    <NavigationMenuLink
-                      asChild
-                      className="text-base font-medium -tracking-[0.02rem] p-0"
-                    >
-                      <Link href={item.href}>{item.title}</Link>
-                    </NavigationMenuLink>
-                  ) : (
-                    <>
-                      <NavigationMenuTrigger
-                        className={cn(
-                          "text-base font-medium -tracking-[0.02rem] p-0",
-                          item.className
-                        )}
-                      >
-                        {item.icon && (
-                          <Image
-                            src={item.icon}
-                            width={0}
-                            height={0}
-                            alt=""
-                            className="size-6 object-cover mr-2"
-                          />
-                        )}
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="flex items-center justify-between space-x-6 w-[60rem]">
-                          <div className="p-8 h-full w-full flex-1">
-                            <h3 className="text-[2rem] text-[#333] font-svn-mightiest font-medium leading-[2.4rem] -tracking-[0.04rem] mb-9">
-                              {item.title}
-                            </h3>
-                            <ul className="grid gap-2">
-                              {item.subMenus?.map((itemSub) => (
-                                <li key={itemSub.title}>
-                                  <NavigationMenuLink
-                                    asChild
-                                    className="px-0 uppercase text-xl font-medium leading-[1.5rem] -tracking-[0.0125rem] text-[#5C5C5C]"
-                                  >
-                                    <Link href={itemSub.href}>
-                                      {itemSub.title}
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          {item.image && (
-                            <Image
-                              src={item.image}
-                              alt={item.title}
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              className="w-[26.5rem] h-[20.5rem] rounded-xl object-cover"
-                            />
-                          )}
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  )}
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+          <NavMenu datas={navItemRight} />
         </div>
       </>
 

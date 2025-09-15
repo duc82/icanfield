@@ -72,8 +72,8 @@ export default function MobileMenu({ navItemLeft }: MobileMenuProps) {
       </button>
       <nav
         className={cn(
-          "fixed inset-0 w-full top-[60px] -translate-y-full overflow-y-auto invisible bg-[#F6F6F4] transition-all duration-500 -z-10",
-          isOpen && "visible translate-y-0"
+          "fixed inset-0 w-full top-[60px] translate-x-full overflow-y-auto invisible bg-[#F6F6F4] transition-all duration-500 -z-10",
+          isOpen && "visible translate-x-0"
         )}
       >
         <div className="p-4 pb-6 flex flex-col gap-3">

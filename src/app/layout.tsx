@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import GsapProvider from "@/components/provider/GsapProvider";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,9 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <Header />
         <GsapProvider>{children}</GsapProvider>
-        <Footer />
       </body>
     </html>
   );

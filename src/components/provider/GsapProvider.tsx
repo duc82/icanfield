@@ -6,6 +6,8 @@ import { CustomEase } from "gsap/dist/CustomEase";
 import ScrollSmoother from "gsap/dist/ScrollSmoother";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 gsap.registerPlugin(
   useGSAP,
@@ -27,6 +29,11 @@ export default function GsapProvider({
       ease: "power2",
       duration: 0.9,
     });
+    ScrollSmoother.create({
+      smooth: 1.5,
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+    });
     ScrollTrigger.defaults({
       toggleActions: "play play play none",
       start: "top top+=100%",
@@ -39,7 +46,7 @@ export default function GsapProvider({
         y: 50,
         scrollTrigger: {
           trigger: el,
-          start: "top 80%",
+          markers: true,
         },
         delay: 0.2,
         duration: 1,
@@ -48,7 +55,12 @@ export default function GsapProvider({
   }, []);
   return (
     <div id="smooth-wrapper">
-      <div id="smooth-content">{children}</div>
+      <Header />
+
+      <div id="smooth-content">
+        {children}
+        <Footer />
+      </div>
     </div>
   );
 }

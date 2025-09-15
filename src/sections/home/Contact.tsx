@@ -127,14 +127,14 @@ export default function Contact() {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-[35.5625rem] max-sm:w-[18.375rem] h-[9.68869rem] max-sm:h-auto shrink-0 object-cover"
+          className="fade-in-box w-[35.5625rem] max-sm:w-[18.375rem] h-[9.68869rem] max-sm:h-auto shrink-0 object-cover"
         />
         <div className="max-w-[42rem] max-sm:max-w-full">
-          <p className="mb-8 max-sm:mb-4 text-[2rem] max-sm:text-xl font-semibold leading-[2.6rem]  max-sm:leading-[1.625rem] text-brown -tracking-[0.08rem] max-sm:-tracking-[0.05rem]">
+          <p className="fade-in-box mb-8 max-sm:mb-4 text-[2rem] max-sm:text-xl font-semibold leading-[2.6rem]  max-sm:leading-[1.625rem] text-brown -tracking-[0.08rem] max-sm:-tracking-[0.05rem]">
             Cuộc sống là một hành trình, và mỗi bước đi đúng đắn hôm nay sẽ mở
             ra cánh cửa cho một tương lai tươi sáng và tràn đầy hy vọng.
           </p>
-          <p className="text-2xl max-sm:text-base font-medium -tracking-[0.06rem] max-sm:-tracking-[0.04rem] text-[#767676]">
+          <p className="fade-in-box text-2xl max-sm:text-base font-medium -tracking-[0.06rem] max-sm:-tracking-[0.04rem] text-[#767676]">
             Khuyết danh
           </p>
         </div>

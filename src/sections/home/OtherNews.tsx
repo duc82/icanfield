@@ -127,27 +127,19 @@ export default function OtherNews() {
   useGSAP(() => {
     const items = gsap.utils.toArray<HTMLElement>(".fade-in-up-item");
 
-    items.forEach((item, i) => {
-      // 0.0, 0.1, 0.2, 0.0, 0.1, 0.2, ...
-      const delay = (i % 3) * 0.1;
+    for (let i = 0; i < items.length; i += 3) {
+      const group = items.slice(i, i + 3);
 
-      gsap.fromTo(
-        item,
-        {
-          autoAlpha: 0,
-          y: 25,
+      gsap.from(group, {
+        autoAlpha: 0,
+        y: 25,
+        duration: 0.75,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: group[0],
         },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.75,
-          delay,
-          scrollTrigger: {
-            trigger: item,
-          },
-        }
-      );
-    });
+      });
+    }
   }, []);
 
   return (

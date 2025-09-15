@@ -3,10 +3,17 @@
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/dist/CustomEase";
+import ScrollSmoother from "gsap/dist/ScrollSmoother";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, CustomEase, ScrollToPlugin);
+gsap.registerPlugin(
+  useGSAP,
+  ScrollTrigger,
+  CustomEase,
+  ScrollToPlugin,
+  ScrollSmoother
+);
 
 export default function GsapProvider({
   children,
@@ -30,23 +37,14 @@ export default function GsapProvider({
       gsap.from(el, {
         autoAlpha: 0,
         y: 50,
-        scrollTrigger: el,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+        },
         delay: 0.2,
         duration: 1,
       })
     );
-
-    gsap.from(".fade-in-box-item", {
-      scrollTrigger: {
-        trigger: ".fade-in-box-item",
-        start: "top 80%",
-      },
-      opacity: 0,
-      y: -25,
-      stagger: 0.1,
-      duration: 0.5,
-      delay: 0.2,
-    });
   }, []);
   return (
     <div id="smooth-wrapper">

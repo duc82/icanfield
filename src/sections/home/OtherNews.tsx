@@ -4,9 +4,14 @@ import ArrowTopRight from "@/components/svg/ArrowTopRight";
 import ChevronLeft from "@/components/svg/ChevronLeft";
 import Search from "@/components/svg/Search";
 import { cn } from "@/lib/utils";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const tabs = [
   {
@@ -119,6 +124,32 @@ const news = [
 export default function OtherNews() {
   const [activeTabId, setActiveTabId] = useState(1);
 
+  useGSAP(() => {
+    const items = gsap.utils.toArray<HTMLElement>(".fade-in-up-item");
+
+    items.forEach((item, i) => {
+      // 0.0, 0.1, 0.2, 0.0, 0.1, 0.2, ...
+      const delay = (i % 3) * 0.1;
+
+      gsap.fromTo(
+        item,
+        {
+          autoAlpha: 0,
+          y: 25,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.75,
+          delay,
+          scrollTrigger: {
+            trigger: item,
+          },
+        }
+      );
+    });
+  }, []);
+
   return (
     <section className="px-20 pb-[2.19rem] max-sm:pb-12 max-sm:px-4">
       <Title text="Tin tức khác" className="fade-in-box mb-7 max-sm:mb-4" />
@@ -175,7 +206,7 @@ export default function OtherNews() {
         {news.map((item, i) => (
           <Link
             href={item.href}
-            className="fade-in-box-item rounded-[1.25rem] overflow-hidden relative group"
+            className="fade-in-up-item rounded-[1.25rem] overflow-hidden relative group"
             key={i}
           >
             <Image

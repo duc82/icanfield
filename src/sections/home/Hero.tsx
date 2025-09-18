@@ -11,10 +11,10 @@ export default function Hero() {
               slug: "/blogs",
             },
           ]}
-          className="max-sm:hidden fade-in-box"
+          className="max-sm:hidden"
         />
         <div className="mt-6">
-          <div className="w-[58.96875rem] fade-in-box">
+          <div className="w-[58.96875rem]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="947"

@@ -3,19 +3,12 @@
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/dist/CustomEase";
-import ScrollSmoother from "gsap/dist/ScrollSmoother";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
-gsap.registerPlugin(
-  useGSAP,
-  ScrollTrigger,
-  CustomEase,
-  ScrollToPlugin,
-  ScrollSmoother
-);
+gsap.registerPlugin(useGSAP, ScrollTrigger, CustomEase, ScrollToPlugin);
 
 export default function GsapProvider({
   children,
@@ -28,11 +21,6 @@ export default function GsapProvider({
     gsap.defaults({
       ease: "power2",
       duration: 0.9,
-    });
-    ScrollSmoother.create({
-      smooth: 1.5,
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
     });
     ScrollTrigger.defaults({
       toggleActions: "play play play none",

@@ -8,10 +8,12 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import Link from "next/link";
 import ArrowRight from "@/components/svg/ArrowRight";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import useIsMobile from "@/hooks/useIsMobile";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const featuredNews = [
   {
@@ -19,7 +21,7 @@ const featuredNews = [
       "Khám phá các quốc gia có chính sách định cư tay nghề tốt nhất, cơ hội phát triển sự nghiệp.",
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
-    image: "/home/featured_news-1.png",
+    image: "/home/featured_news-2.png",
     href: "#",
   },
   {
@@ -47,12 +49,35 @@ export default function FeaturedNews() {
 
   const itemRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  const handleChangeNews = useCallback(() => {
+    const progressBar = progressBarRef.current;
+    if (!progressBar) return;
+
+    gsap.killTweensOf(progressBar);
+
+    gsap.set(progressBar, { width: 0 });
+
+    gsap.to(progressBar, {
+      width: "100%",
+      ease: "none",
+      duration: 5,
+      repeat: featuredNews.length - 1,
+
+      onRepeat: () => {
+        setNewsActive((prev) =>
+          prev === featuredNews.length - 1 ? prev : prev + 1
+        );
+      },
+    });
+  }, []);
+
+  useGSAP(() => {
     if (itemRef.current) {
       const height = itemRef.current.offsetHeight;
       setItemHeight(height);
     }
-  }, []);
+    handleChangeNews();
+  }, [handleChangeNews]);
 
   const featuredNew = featuredNews[newsActive];
 
@@ -136,9 +161,10 @@ export default function FeaturedNews() {
             <div className="flex flex-col space-y-7 text-white">
               <button
                 type="button"
-                onClick={() =>
-                  setNewsActive((prev) => (prev === 0 ? prev : prev - 1))
-                }
+                onClick={() => {
+                  handleChangeNews();
+                  setNewsActive((prev) => (prev === 0 ? prev : prev - 1));
+                }}
                 className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
               >
                 <ChevronUp />
@@ -148,7 +174,10 @@ export default function FeaturedNews() {
                   <button
                     key={index}
                     type="button"
-                    onClick={() => setNewsActive(index)}
+                    onClick={() => {
+                      handleChangeNews();
+                      setNewsActive(index);
+                    }}
                     className={cn(
                       "size-3 flex items-center justify-center rounded-full transition duration-300",
 
@@ -166,11 +195,12 @@ export default function FeaturedNews() {
               </div>
               <button
                 type="button"
-                onClick={() =>
+                onClick={() => {
+                  handleChangeNews();
                   setNewsActive((prev) =>
                     prev === featuredNews.length - 1 ? prev : prev + 1
-                  )
-                }
+                  );
+                }}
                 className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
               >
                 <ChevronDown />

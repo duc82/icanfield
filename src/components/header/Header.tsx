@@ -17,8 +17,7 @@ import { useGSAP } from "@gsap/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "swiper/css/autoplay";
 import NavMenu from "./NavMenu";
 import { NavItem } from "@/types/header";
 
@@ -204,7 +203,7 @@ export default function Header() {
                 alt=""
                 className="size-3.5 object-cover"
               />
-              <p className="uppercase whitespace-nowrap text-text-primary text-xs font-medium leading-[1.125rem]">
+              <p className="uppercase text-text-primary text-xs font-medium leading-[1.125rem]">
                 Tin doanh nghiệp
               </p>
             </div>
@@ -216,7 +215,7 @@ export default function Header() {
                 delay: 5000,
               }}
               modules={[Autoplay]}
-              className="h-5"
+              className="h-6 w-80"
             >
               <SwiperSlide className="!flex items-center">
                 <Link
@@ -258,7 +257,7 @@ export default function Header() {
                   alt={link.title}
                   className="size-4 object-cover"
                 />
-                <span className="uppercase whitespace-nowrap text-xs font-medium leading-[1.125rem] tracking-[-0.0075rem]">
+                <span className="uppercase text-xs font-medium leading-[1.125rem] tracking-[-0.0075rem]">
                   {link.title}
                 </span>
               </Link>

@@ -2,10 +2,15 @@
 import InputGroup from "@/components/home/InputGroup";
 import ArrowRight from "@/components/svg/ArrowRight";
 import { contactSchema } from "@/schemas/contact";
+import { useGSAP } from "@gsap/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type FormContact = z.infer<typeof contactSchema>;
 
@@ -21,6 +26,21 @@ export default function Contact() {
   const onSubmit = (data: FormContact) => {
     console.log(data);
   };
+
+  useGSAP(() => {
+    gsap.from(".fade-in-box-contact", {
+      autoAlpha: 0,
+      y: 100,
+      duration: 1,
+      delay: 0.2,
+      ease: "power2",
+      scrollTrigger: {
+        trigger: ".fade-in-box-contact",
+        start: "5% bottom",
+        end: "bottom top",
+      },
+    });
+  }, []);
 
   return (
     <section className="relative h-[118.25rem] max-sm:h-[69.9375rem] w-full overflow-hidden">
@@ -38,7 +58,7 @@ export default function Contact() {
         width={0}
         height={0}
         sizes="100vw"
-        className="absolute fade-in-box -top-[5rem] left-6 w-[64.45769rem] h-[71.75rem] object-cover z-20 max-sm:hidden"
+        className="absolute fade-in-box-contact -top-[5rem] left-6 w-[64.45769rem] h-[71.75rem] object-cover z-20 max-sm:hidden"
       />
       <Image
         src="/home/contact-building.png"

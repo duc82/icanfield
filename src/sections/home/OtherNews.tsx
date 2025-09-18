@@ -9,7 +9,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -127,19 +127,40 @@ export default function OtherNews() {
   useGSAP(() => {
     const items = gsap.utils.toArray<HTMLElement>(".fade-in-up-item");
 
-    for (let i = 0; i < items.length; i += 3) {
-      const group = items.slice(i, i + 3);
-
-      gsap.from(group, {
-        autoAlpha: 0,
-        y: 25,
-        duration: 0.75,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: group[0],
-        },
+    const matchMedia = gsap.matchMedia();
+    matchMedia.add("(max-width: 639px)", () => {
+      items.forEach((item) => {
+        gsap.from(item, {
+          autoAlpha: 0,
+          y: 50,
+          duration: 0.75,
+          scrollTrigger: {
+            trigger: item,
+          },
+        });
       });
-    }
+    });
+
+    matchMedia.add("(min-width: 640px)", () => {
+      for (let i = 0; i < items.length; i += 3) {
+        const group = items.slice(i, i + 3);
+        const y = 50 + ((i / 3) % 3) * 25;
+        gsap.from(group, {
+          autoAlpha: 0,
+          y,
+          duration: 0.75,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: group[0],
+          },
+        });
+      }
+    });
+
+    return () => {
+      matchMedia.revert();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   return (

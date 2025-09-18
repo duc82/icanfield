@@ -142,7 +142,10 @@ export default function FeaturedNews() {
                 <button
                   type="button"
                   key={index}
-                  onClick={() => setNewsActive(index)}
+                  onClick={() => {
+                    handleChangeNews();
+                    setNewsActive(index);
+                  }}
                   ref={index === 0 ? itemRef : null}
                   className={cn(
                     "text-white/[34%] text-left transition duration-300",
@@ -165,12 +168,12 @@ export default function FeaturedNews() {
                   handleChangeNews();
                   setNewsActive((prev) => (prev === 0 ? prev : prev - 1));
                 }}
-                className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
+                className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/50"
               >
                 <ChevronUp />
               </button>
               <div className="flex flex-col items-center space-y-1.5">
-                {featuredNews.map((item, index) => (
+                {featuredNews.map((_, index) => (
                   <button
                     key={index}
                     type="button"
@@ -201,7 +204,7 @@ export default function FeaturedNews() {
                     prev === featuredNews.length - 1 ? prev : prev + 1
                   );
                 }}
-                className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/90"
+                className="flex items-center justify-center p-2.5 rounded-full hover:bg-brown/50"
               >
                 <ChevronDown />
               </button>

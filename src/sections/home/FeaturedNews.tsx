@@ -21,7 +21,10 @@ const featuredNews = [
       "Khám phá các quốc gia có chính sách định cư tay nghề tốt nhất, cơ hội phát triển sự nghiệp.",
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
-    image: "/home/featured_news-2.png",
+    image: {
+      desktop: "/home/featured_news-1.png",
+      mobile: "/home/featured_news-1-mobile.png",
+    },
     href: "#",
   },
   {
@@ -29,20 +32,26 @@ const featuredNews = [
       "Khám phá các quốc gia có chính sách định cư tay nghề tốt nhất, cơ hội phát triển sự nghiệp.",
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
-    image: "/home/featured_news-1.png",
+    image: {
+      desktop: "/home/featured_news-2.png",
+      mobile: "/home/featured_news-2.png",
+    },
     href: "#",
   },
   {
     title: "Cập nhật chính sách du học Úc dành cho sinh viên quốc tế năm 2024",
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
-    image: "/home/featured_news-2.png",
+    image: {
+      desktop: "/home/featured_news-1.png",
+      mobile: "/home/featured_news-1-mobile.png",
+    },
     href: "#",
   },
 ];
 
 export default function FeaturedNews() {
-  const isMobile = useIsMobile();
+  const { isMobile, isLoading } = useIsMobile();
   const [newsActive, setNewsActive] = useState(0);
   const [itemHeight, setItemHeight] = useState(0);
   const progressBarRef = useRef(null);
@@ -72,24 +81,26 @@ export default function FeaturedNews() {
   }, []);
 
   useGSAP(() => {
+    if (isLoading || isMobile) return;
     if (itemRef.current) {
       const height = itemRef.current.offsetHeight;
       setItemHeight(height);
     }
     handleChangeNews();
-  }, [handleChangeNews]);
+  }, [handleChangeNews, isLoading, isMobile]);
 
   const featuredNew = featuredNews[newsActive];
+  const isMobileDevice = isMobile && !isLoading;
 
   return (
     <section className="px-20 pt-20 pb-[6.75rem] max-sm:pt-12 max-sm:pb-6 max-sm:px-4">
       <Title text="Tin tức nổi bật" className="mb-6" />
-      {!isMobile && (
+      {!isMobileDevice && (
         <div className="max-sm:hidden rounded-[1.25rem] w-full h-[34.63219rem] relative overflow-hidden">
           {featuredNews.map((item, index) => (
             <Image
               key={index}
-              src={item.image}
+              src={item.image.desktop}
               fill
               alt={featuredNew?.title || "Featured News"}
               className={cn(
@@ -121,7 +132,7 @@ export default function FeaturedNews() {
               </h3>
             </div>
             <Link
-              href={featuredNew?.href || "#"}
+              href={featuredNew.href}
               className="px-6 py-2 w-fit text-white text-sm font-medium leading-[1.3125rem] tracking-[-0.0175rem] rounded-lg border border-white/25 h-12 space-x-2 flex items-center"
             >
               <span>Chi tiết bài viết</span>
@@ -219,7 +230,7 @@ export default function FeaturedNews() {
         </div>
       )}
 
-      {isMobile && (
+      {isMobileDevice && (
         <Swiper
           slidesPerView={1}
           spaceBetween={16}
@@ -235,17 +246,17 @@ export default function FeaturedNews() {
               return `<span class="${className}"><div class="size-2 rounded-full border border-brown/40"></div></span>`;
             },
           }}
+          className="min-h-[34.625rem] h-full"
         >
           {featuredNews.map((featuredNew, index) => (
             <SwiperSlide key={index}>
               <div
-                className="rounded-[1.25rem] relative overflow-hidden"
+                className="rounded-[1.25rem] min-h-[34.625rem] h-full relative overflow-hidden"
                 style={{
-                  backgroundImage: `url(${featuredNew.image})`,
+                  backgroundImage: `url(${featuredNew.image.mobile})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
-                  height: "34.625rem",
                 }}
               >
                 <div className="bg-linear-[182deg] from-[rgba(63,34,20,0.00)] from-[28.99%] to-black to-[107.39%] absolute top-0 w-full h-full"></div>

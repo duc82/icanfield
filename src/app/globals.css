@@ -196,3 +196,7 @@ html > body[data-scroll-locked] {
 .swiper-pagination-active > div {
   @apply bg-brown border-none;
 }
+
+.leaflet-interactive {
+  @apply hover:fill-[#bc9247]!;
+}

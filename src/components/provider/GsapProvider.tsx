@@ -43,11 +43,8 @@ export default function GsapProvider({
   return (
     <div id="smooth-wrapper">
       <Header />
-
-      <div id="smooth-content">
-        {children}
-        <Footer />
-      </div>
+      <div id="smooth-content">{children}</div>
+      <Footer />
     </div>
   );
 }

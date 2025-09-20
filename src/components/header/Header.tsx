@@ -190,7 +190,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 shadow-md">
+    <header className="sticky top-0 z-[9999] shadow-md">
       {/* Desktop & Tablet */}
       <>
         <div className="max-sm:hidden bg-linear-[118deg] from-primary from-[69.75%] via-secondary via-[142.7%] to-third to-[182.76%] text-white px-20 flex items-center justify-between">

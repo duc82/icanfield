@@ -22,8 +22,8 @@ const featuredNews = [
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
     image: {
-      desktop: "/home/featured_news-1.png",
-      mobile: "/home/featured_news-1-mobile.png",
+      desktop: "/home/featured_news-1.webp",
+      mobile: "/home/featured_news-1-mobile.webp",
     },
     href: "#",
   },
@@ -33,8 +33,8 @@ const featuredNews = [
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
     image: {
-      desktop: "/home/featured_news-2.png",
-      mobile: "/home/featured_news-2.png",
+      desktop: "/home/featured_news-2.webp",
+      mobile: "/home/featured_news-2.webp",
     },
     href: "#",
   },
@@ -43,8 +43,8 @@ const featuredNews = [
     type: "Sự kiện nổi bật",
     date: "14.10.2024",
     image: {
-      desktop: "/home/featured_news-1.png",
-      mobile: "/home/featured_news-1-mobile.png",
+      desktop: "/home/featured_news-1.webp",
+      mobile: "/home/featured_news-1-mobile.webp",
     },
     href: "#",
   },
@@ -70,15 +70,14 @@ export default function FeaturedNews() {
       width: "100%",
       ease: "none",
       duration: 5,
-      repeat: featuredNews.length - 1,
-
+      repeat: featuredNews.length - (newsActive + 1),
       onRepeat: () => {
         setNewsActive((prev) =>
           prev === featuredNews.length - 1 ? prev : prev + 1
         );
       },
     });
-  }, []);
+  }, [newsActive]);
 
   useGSAP(() => {
     if (isLoading || isMobile) return;
@@ -242,7 +241,7 @@ export default function FeaturedNews() {
             bulletClass:
               "size-3 flex items-center justify-center rounded-full bg-white/40",
             bulletActiveClass: "border border-brown swiper-pagination-active",
-            renderBullet: function (index, className) {
+            renderBullet: function (_index, className) {
               return `<span class="${className}"><div class="size-2 rounded-full border border-brown/40"></div></span>`;
             },
           }}

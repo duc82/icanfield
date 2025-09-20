@@ -223,8 +223,8 @@ export default function MapPage() {
     .join("-");
 
   return (
-    <section className="bg-gray-200 px-10 max-sm:px-4 py-10 relative">
-      <div className="flex h-full max-sm:flex-col rounded-[1.25rem] p-[1rem_2.69rem_2.38rem] pl-0 bg-white">
+    <section className="bg-gray-200 px-10 max-sm:px-0 py-10 relative">
+      <div className="flex h-full max-sm:flex-col rounded-[1.25rem] p-[1rem_2.69rem_2.38rem] pl-0 max-sm:px-0 bg-white">
         <div className="relative w-[65rem] h-[41.5rem] max-sm:h-[15rem] max-sm:w-full max-sm:px-4">
           <Map
             regions={regions}
@@ -232,7 +232,7 @@ export default function MapPage() {
             handleChangeRegion={(region) => setActiveRegion(region)}
           />
         </div>
-        <div className="flex w-[28.3125rem] flex-col pt-[3.12rem] max-sm:w-full max-sm:px-0">
+        <div className="relative flex w-[28.3125rem] flex-col pt-[3.12rem] max-sm:w-full max-sm:px-0 z-[600]">
           <div className="flex overflow-hidden overflow-x-auto sm:min-h-[27.48rem] sm:flex-col sm:space-y-6 max-sm:space-x-4 max-sm:px-4">
             {programs
               .filter((p) => p.regionCode === activeRegion.code)
@@ -260,18 +260,18 @@ export default function MapPage() {
                         </h3>
                       </div>
                       <div className="mt-[0.37rem] flex items-center justify-start space-x-[0.25rem] rounded-[0.25rem] bg-[rgba(101,67,30,0.15)] p-[0.25rem_0.5rem] sm:hidden">
-                        <span className="tracking-[-0.00625rem] text-greyscaletext-800 sub-10">
+                        <span className="tracking-[-0.00625rem] text-[rgb(28,28,28)] text-[0.625rem] leading-normal">
                           Thời gian xử lý
                         </span>
-                        <p className="text-[0.625rem] font-bold text-greyscaletext-800">
+                        <p className="text-[0.625rem] font-bold text-[rgb(28,28,28)]">
                           {program.duration}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="flex space-x-6 px-4 pt-[0.87rem] max-sm:space-x-2 max-sm:px-0 max-sm:pt-3 text-[rgb(21,21,21)]">
-                    <div>
-                      <span className="text-[0.6875rem] leading-normal whitespace-nowrap">
+                    <div className="max-sm:bg-white max-sm:py-1 max-sm:px-2 max-sm:rounded-lg max-sm:flex-1">
+                      <span className="text-[0.6875rem] leading-normal whitespace-nowrap max-sm:text-[0.625rem] max-sm:text-[rgba(92,92,92,0.7)] max-sm:tracking-[-.00625rem]">
                         Ngân sách tối thiểu
                       </span>
                       <p className="font-bold text-[0.8125rem] line-clamp-1 leading-normal">
@@ -286,8 +286,8 @@ export default function MapPage() {
                         {program.duration}
                       </p>
                     </div>
-                    <div>
-                      <span className="text-[0.6875rem] leading-normal whitespace-nowrap">
+                    <div className="max-sm:bg-white max-sm:py-1 max-sm:px-2 max-sm:rounded-lg max-sm:flex-1">
+                      <span className="text-[0.6875rem] leading-normal whitespace-nowrap max-sm:text-[0.625rem] max-sm:text-[rgba(92,92,92,0.7)] max-sm:tracking-[-.00625rem]">
                         Ngoại ngữ
                       </span>
                       <p className="font-bold text-[0.8125rem] line-clamp-1 leading-normal">

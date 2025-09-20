@@ -1,5 +1,5 @@
 "use client";
-import { Marker, useMap } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import L from "leaflet";
 import { Region } from "@/types/map";
 import { getCountryCenter } from "./getCountryCenter";
@@ -29,17 +29,19 @@ const customMarkerIcon = (flag: string, name: string) =>
 
 export default function FlyMarker({
   region,
-  handleChangeRegion,
-  zoom = 3,
-  duration = 1,
+  handleFlyToPos,
 }: {
   region: Region;
-  handleChangeRegion: (region: Region) => void;
-  zoom?: number;
-  duration?: number;
+  handleFlyToPos: ({
+    region,
+    zoom,
+    duration,
+  }: {
+    region: Region;
+    zoom?: number;
+    duration?: number;
+  }) => void;
 }) {
-  const map = useMap();
-
   let countryName = region.propertyName;
   if (region.code === "EU") {
     countryName = "Germany";
@@ -63,9 +65,7 @@ export default function FlyMarker({
       position={{ lat: pos[0], lng: pos[1] }}
       eventHandlers={{
         click: () => {
-          if (region.code === "VN") return;
-          handleChangeRegion(region);
-          map.flyTo({ lat: pos[0], lng: pos[1] }, zoom, { duration });
+          handleFlyToPos({ region });
         },
       }}
       icon={customMarkerIcon(region.flag, region.name)}

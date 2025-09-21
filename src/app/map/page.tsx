@@ -1,11 +1,9 @@
 "use client";
 import { Program, Region } from "@/types/map";
-import dynamic from "next/dynamic";
+import Map from "@/components/map/Map";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
-const Map = dynamic(() => import("@/components/map/Map"), { ssr: false });
 
 const regions: Region[] = [
   {

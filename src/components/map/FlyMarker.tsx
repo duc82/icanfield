@@ -1,31 +1,13 @@
 "use client";
-import { Marker } from "react-leaflet";
-import L from "leaflet";
 import { Region } from "@/types/map";
 import { getCountryCenter } from "./getCountryCenter";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import * as Leaflet from "leaflet";
 
-const customMarkerIcon = (flag: string, name: string) =>
-  L.divIcon({
-    className:
-      "!w-[5rem] !h-[3.26rem] relative !-mt-[3.26rem] max-sm:!-mt-[2rem] max-sm:!pointer-events-none ",
-    html: `
-      <div class="custom-marker pointer-events-none !w-[5rem] !h-[3.26rem] absolute !left-[-1.5rem] top-0 max-sm:!pointer-events-none">
-              <img
-                src="/map/bg-marker.png"
-                alt="${name}"
-                class="absolute w-full h-full top-0 !left-1/2 !-translate-x-1/2 object-cover marker-bound max-sm:!w-[2rem] max-sm:!h-auto"
-              />
-              <img
-                src="${flag}"
-                alt="${name}"
-                class="absolute !size-[1.5rem] top-[1rem] !left-1/2 !-translate-x-1/2 object-cover marker-bound rounded-full max-sm:!size-[1rem] max-sm:top-[0.6rem]"
-              />
-              <div class="text-brown absolute bottom-[-0.1rem] left-1/2 flex h-[1.375rem] w-fit -translate-x-1/2 translate-y-full items-center whitespace-nowrap rounded-[6.25rem] bg-[#E1DDC5] px-[0.5rem] text-[0.75rem] font-semibold uppercase leading-[1.2] tracking-[-0.0075rem]">
-                ${name}
-              </div>
-            </div>
-      `,
-  });
+const Marker = dynamic(() => import("react-leaflet").then((l) => l.Marker), {
+  ssr: false,
+});
 
 export default function FlyMarker({
   region,
@@ -42,6 +24,8 @@ export default function FlyMarker({
     duration?: number;
   }) => void;
 }) {
+  const [L, setL] = useState<typeof Leaflet | null>(null);
+
   let countryName = region.propertyName;
   if (region.code === "EU") {
     countryName = "Germany";
@@ -56,6 +40,36 @@ export default function FlyMarker({
   if (region.propertyName === "Paracel Islands") {
     pos = [16.5, 112.0];
   }
+
+  const customMarkerIcon = (flag: string, name: string) => {
+    if (!L) return;
+
+    return L.divIcon({
+      className:
+        "!w-[5rem] !h-[3.26rem] relative !-mt-[3.26rem] max-sm:!-mt-[2rem] max-sm:!pointer-events-none ",
+      html: `
+      <div class="custom-marker pointer-events-none !w-[5rem] !h-[3.26rem] absolute !left-[-1.5rem] top-0 max-sm:!pointer-events-none">
+              <img
+                src="/map/bg-marker.png"
+                alt="${name}"
+                class="absolute w-full h-full top-0 !left-1/2 !-translate-x-1/2 object-cover marker-bound max-sm:!w-[2rem] max-sm:!h-auto"
+              />
+              <img
+                src="${flag}"
+                alt="${name}"
+                class="absolute !size-[1.5rem] top-[1rem] !left-1/2 !-translate-x-1/2 object-cover marker-bound rounded-full max-sm:!size-[1rem] max-sm:top-[0.6rem]"
+              />
+              <div class="text-brown absolute bottom-[-0.1rem] left-1/2 flex h-[1.375rem] w-fit -translate-x-1/2 translate-y-full items-center whitespace-nowrap rounded-[6.25rem] bg-[#E1DDC5] px-[0.5rem] text-[0.75rem] font-semibold uppercase leading-[1.2] tracking-[-0.0075rem]">
+                ${name}
+              </div>
+            </div>
+      `,
+    });
+  };
+
+  useEffect(() => {
+    import("leaflet").then((leaflet) => setL(leaflet));
+  }, []);
 
   if (!pos) return null;
 

@@ -122,9 +122,9 @@ const navItems: NavItem[] = [
       {
         title: "Các chương trình định cư",
         href: "#",
-        image: "/header/submenu-1.png",
+        image: "/header/submenu-1.webp",
       },
-      { title: "Dự án EB-5", href: "#", image: "/header/submenu-2.png" },
+      { title: "Dự án EB-5", href: "#", image: "/header/submenu-2.webp" },
     ],
   },
   {
@@ -142,8 +142,12 @@ const navItemRight: NavItem[] = [
     title: "Các chương trình khác",
     x: "29rem",
     subMenus: [
-      { title: "Đầu tư định cư Úc", href: "#", image: "/header/submenu-2.png" },
-      { title: "Bất động sản Úc", href: "#", image: "/header/submenu-3.png" },
+      {
+        title: "Đầu tư định cư Úc",
+        href: "#",
+        image: "/header/submenu-2.webp",
+      },
+      { title: "Bất động sản Úc", href: "#", image: "/header/submenu-3.webp" },
     ],
   },
   {
@@ -157,16 +161,16 @@ const navItemRight: NavItem[] = [
       "text-sm leading-[1.3125rem] tracking-[-0.0175rem] bg-primary text-white rounded-lg py-2 px-4.5 pr-[1.375rem] hover:bg-primary hover:text-white hover:bg-primary text-white focus:bg-primary focus:text-white focus:bg-primary",
     x: "45rem",
     subMenus: [
-      { title: "Thẩm định hồ sơ", href: "#", image: "/header/submenu-1.png" },
+      { title: "Thẩm định hồ sơ", href: "#", image: "/header/submenu-1.webp" },
       {
         title: "So sánh chương trình",
         href: "#",
-        image: "/header/submenu-2.png",
+        image: "/header/submenu-2.webp",
       },
       {
         title: "Thông tin hộ chiếu",
         href: "#",
-        image: "/header/submenu-3.png",
+        image: "/header/submenu-3.webp",
       },
     ],
   },

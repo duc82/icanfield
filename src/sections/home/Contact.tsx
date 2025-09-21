@@ -45,7 +45,7 @@ export default function Contact() {
   return (
     <section className="relative h-[118.25rem] max-sm:h-[69.9375rem] w-full overflow-hidden">
       <Image
-        src="/home/contact.png"
+        src="/home/contact.webp"
         alt=""
         width={0}
         height={0}
@@ -53,7 +53,7 @@ export default function Contact() {
         className="absolute top-0 left-0 w-full h-full object-cover z-30 max-sm:hidden"
       />
       <Image
-        src="/home/contact-west.png"
+        src="/home/contact-west.webp"
         alt=""
         width={0}
         height={0}
@@ -61,7 +61,7 @@ export default function Contact() {
         className="absolute fade-in-box-contact -top-[5rem] left-6 w-[64.45769rem] h-[71.75rem] object-cover z-20 max-sm:hidden"
       />
       <Image
-        src="/home/contact-building.png"
+        src="/home/contact-building.webp"
         alt=""
         width={0}
         height={0}
@@ -85,7 +85,7 @@ export default function Contact() {
         className="absolute top-[28.06rem] left-[36.88rem] w-[12.56263rem] h-[10.36419rem] object-cover z-40 max-sm:hidden"
       />
       <Image
-        src="/home/contact-mobile.png"
+        src="/home/contact-mobile.webp"
         alt=""
         fill
         className="object-cover z-10 sm:hidden"

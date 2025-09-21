@@ -1,10 +1,10 @@
 "use client";
-import { MapContainer, GeoJSON } from "react-leaflet";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "leaflet/dist/leaflet.css";
 import "swiper/css";
-import { Map as IMap, PathOptions } from "leaflet";
-import { Feature, GeometryObject } from "geojson";
+import dynamic from "next/dynamic";
+import type { Map as IMap, PathOptions } from "leaflet";
+import { Feature, GeometryObject, GeoJsonObject } from "geojson";
 import worldData from "@/data/world.json";
 import FlyMarker from "./FlyMarker";
 import Tab from "./Tab";
@@ -12,6 +12,17 @@ import CustomZoom from "./CustomZoom";
 import { Region } from "@/types/map";
 import { useState } from "react";
 import { getCountryCenter } from "./getCountryCenter";
+
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((l) => l.MapContainer),
+  {
+    ssr: false,
+  }
+);
+const GeoJSON = dynamic(
+  () => import("react-leaflet/GeoJSON").then((l) => l.GeoJSON),
+  { ssr: false }
+);
 
 const center = {
   lat: 50,
@@ -28,6 +39,7 @@ export default function Map({
   handleChangeRegion: (region: Region) => void;
 }) {
   const [map, setMap] = useState<IMap | null>(null);
+  const [ready, setReady] = useState(false);
 
   const defaultStyle = (feature?: Feature<GeometryObject>): PathOptions => {
     const countries = regions.flatMap(
@@ -60,7 +72,7 @@ export default function Map({
   const handleFlyToPos = ({
     region,
     zoom = 3,
-    duration = 1,
+    duration = 0.75,
   }: {
     region: Region;
     zoom?: number;
@@ -90,14 +102,16 @@ export default function Map({
 
   return (
     <>
-      <div className="relative z-[600] w-full overflow-hidden sm:hidden">
+      <div className="absolute top-0 left-0 z-[600] overflow-hidden ml-[2.38rem] w-[45.6rem] max-sm:relative max-sm:w-full max-sm:ml-0">
         <Swiper
+          slidesPerView={"auto"}
           spaceBetween={8}
           breakpoints={{
             640: {
               spaceBetween: 56,
             },
           }}
+          hidden={!ready}
           className="!p-4 max-sm:mb-[1.5rem] max-sm:!p-0"
         >
           {regions
@@ -115,41 +129,21 @@ export default function Map({
       </div>
       <MapContainer
         attributionControl={false}
+        scrollWheelZoom={true}
         zoomControl={false}
         center={center}
         zoom={2}
+        minZoom={0.5}
         ref={setMap}
+        whenReady={() => setReady(true)}
         className="h-full !bg-transparent"
       >
-        <div className="relative z-[600] ml-[2.38rem] w-[45.6rem] overflow-hidden max-sm:hidden">
-          <Swiper
-            spaceBetween={8}
-            breakpoints={{
-              640: {
-                spaceBetween: 56,
-              },
-            }}
-            className="!p-4 max-sm:mb-[1.5rem] max-sm:!p-0"
-          >
-            {regions
-              .filter((region) => region.code !== "VN")
-              .map((region, i) => (
-                <SwiperSlide key={i} className="!w-fit">
-                  <Tab
-                    region={region}
-                    isActive={activeRegion.code === region.code}
-                    handleFlyToPos={handleFlyToPos}
-                  />
-                </SwiperSlide>
-              ))}
-          </Swiper>
-        </div>
         <div className="overlay-top pointer-events-none absolute left-0 top-0 z-[500] h-[7.625rem] w-full bg-[linear-gradient(180deg,#FFF_56.16%,rgba(255,255,255,0.00)100%)] max-sm:hidden"></div>
         <div className="overlay-right absolute right-0 top-0 z-[500] h-full w-[9.5rem] bg-[linear-gradient(-90deg,#FFF_56.16%,rgba(255,255,255,0.00)100%)] max-sm:hidden"></div>
         <div className="overlay-bottom pointer-events-none absolute bottom-0 left-0 z-[500] h-[5.5rem] w-full bg-[linear-gradient(0,#FFF_56.16%,rgba(255,255,255,0.00)100%)] max-sm:hidden"></div>
         <div className="overlay-left pointer-events-none absolute left-0 top-0 z-[500] h-full w-[5.0625rem] bg-[linear-gradient(90deg,#FFF_56.16%,rgba(255,255,255,0.00)_100%)] max-sm:hidden"></div>
 
-        <GeoJSON data={worldData as any} style={defaultStyle} />
+        <GeoJSON data={worldData as GeoJsonObject} style={defaultStyle} />
 
         {regions.map((region, i) => {
           return (

@@ -47,7 +47,7 @@ export default function InputGroup({
         <label
           htmlFor={rest.id}
           className={cn(
-            "absolute top-1/2 -translate-y-1/2 left-4 text-base text-[#A1A1A1] -tracking-[0.02rem] cursor-text",
+            "absolute top-1/2 -translate-y-1/2 left-4 text-base text-[#A1A1A1] -tracking-[0.02rem] cursor-text select-none",
             value && "hidden"
           )}
         >

@@ -14,7 +14,7 @@ const regions: Region[] = [
   },
   {
     name: "Châu Âu",
-    propertyName: "Europe",
+    propertyName: "Germany",
     code: "EU",
     countries: [
       "Albania",
@@ -215,10 +215,14 @@ const programs: Program[] = [
 export default function MapPage() {
   const [activeRegion, setActiveRegion] = useState<Region>(regions[0]);
 
-  const regionLower = activeRegion.propertyName
+  let regionLower = activeRegion.propertyName
     .toLowerCase()
     .split(" ")
     .join("-");
+
+  if (regionLower === "germany") {
+    regionLower = "europe";
+  }
 
   return (
     <section className="bg-gray-200 px-10 max-sm:px-0 py-10 relative">

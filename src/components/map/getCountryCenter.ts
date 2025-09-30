@@ -5,6 +5,10 @@ export const getCountryCenter = (countryName: string) => {
   const feature = (worldData as any).features.find(
     (f: any) => f.properties.name === countryName
   );
+
+  if (countryName === "Germany") {
+    console.log("feature", feature);
+  }
   if (!feature) return null;
 
   if (feature.properties.label_x && feature.properties.label_y) {

@@ -2,11 +2,30 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["http://localhost:3000"],
-  productionBrowserSourceMaps: false,
 
-  eslint: {
-    ignoreDuringBuilds: true,
+  // React configuration
+  reactStrictMode: true,
+
+  // Build configuration
+  output: "standalone",
+  poweredByHeader: false,
+
+  // Experimental features
+  experimental: {
+    optimizePackageImports: [
+      "gsap",
+      "@gsap/react",
+      "react-leaflet",
+      "react-leaflet-cluster",
+      "leaflet",
+    ],
+    cssChunking: true, // Enable CSS chunking
+  },
+
+  // Performance configuration
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000, // 25 seconds
+    pagesBufferLength: 2, // Keep 2 pages in buffer
   },
 };
 
